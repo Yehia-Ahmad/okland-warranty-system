@@ -172,7 +172,8 @@
       </div>
     </form>
     <div class="flex justify-center items-center">
-      <p-button label="Save" severity="warn" (click)="addNewCategory()" />
+      <p-button label="Save" severity="warn" styleClass="!px-4 !py-1 !bg-orange !text-dark" (click)="addNewCategory()" [disabled]="addCategory.invalid || isSaving"
+        [loading]="isSaving"></p-button>
     </div>
   </p-dialog>
 

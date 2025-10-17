@@ -33,6 +33,7 @@ export class CustomSidenav implements OnInit {
   expandedCategory: string | null = null;
   categories: any[] = [];
   visible: boolean = false;
+  isSaving: boolean = false;
   logoutVisible: boolean = false;
   addCategory: FormGroup;
 
@@ -57,6 +58,7 @@ export class CustomSidenav implements OnInit {
   }
 
   getAllCategories() {
+    this.categories = [];
     this._cateoryService.getCategories().subscribe((res: any) => {
       res.data.map((category: any) => {
         this.categories.push({ label: category.name, route: `/categories/${category._id}` })     
@@ -142,12 +144,25 @@ export class CustomSidenav implements OnInit {
   }
 
   addNewCategory() {
-    let payload = this.addCategory.value;
-    this._cateoryService.createCategory(payload).subscribe((res: any) => {
-      this.getAllCategories();
-      this.closeDialog();
-    })
+    if (this.addCategory.invalid || this.isSaving) return;
+
+    this.isSaving = true;
+    const payload = this.addCategory.value;
+
+    this._cateoryService.createCategory(payload).subscribe({
+      next: (res: any) => {
+        this.getAllCategories();
+        this.closeDialog();
+        this.addCategory.reset();
+        this.isSaving = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.isSaving = false;
+      }
+    });
   }
+
 
   openLogoutDialog() {
     this.logoutVisible = true;

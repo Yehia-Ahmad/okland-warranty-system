@@ -57,16 +57,18 @@ export class CategoryDetailsComponent {
     private cdr: ChangeDetectorRef,
     private _router: Router
   ) {
-    this.categoryId = this._activatedRoute.snapshot.params['id'];
+    this._activatedRoute.params.subscribe(params => {
+      this.categoryId = params['id'];
+      setTimeout(() => {
+        this.getCategoryDetails();
+        this.getAllCategories();
+        this.getProducts();
+      }, 100);
+    });
   }
 
   ngOnInit() {
     this.initlizeAddProduct();
-    setTimeout(() => {
-      this.getCategoryDetails();
-      this.getAllCategories();
-      this.getProducts();
-    }, 100);
   }
 
   initlizeAddProduct() {
