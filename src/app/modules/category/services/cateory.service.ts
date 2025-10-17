@@ -62,10 +62,6 @@ export class CateoryService {
     return this._http.delete(`${this._baseUrl}models/${id}`);
   }
 
-  createQRCode(model_id: number, payload: any) {
-    return this._http.post(`${this._baseUrl}models/${model_id}/qr-codes`, payload);
-  }
-
   veryQrCode(qr_id: number) {
     return this._http.get(`${this._baseUrl}models/verify-qr/${qr_id}`);
   }

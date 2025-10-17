@@ -100,3 +100,14 @@
     background-color: #FF9933 !important;
     border-radius: 8px !important;
 }
+
+::ng-deep .p-datepicker:has(.p-datepicker-input-icon-container) .p-datepicker-input {
+    width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+    color: #FF9933 !important;
+}
+
+::ng-deep .p-datepicker-input-icon-container {
+    color: #FF9933 !important;
+}

@@ -2,37 +2,46 @@
     <div class="flex flex-col gap-8">
         <div class="flex items-center justify-between p-8 rounded-lg bg-dark">
             @defer (when categoryDetails) {
-                <h2 class="text-2xl font-bold font-azonix text-orange">
-                    okland {{ categoryDetails?.name }}
-                </h2>
+            <h2 class="text-2xl font-bold font-azonix text-orange">
+                okland {{ categoryDetails?.name }}
+            </h2>
             } @placeholder {
-                <h2 class="text-2xl font-bold font-azonix text-orange">
-                    Loading...
-                </h2>
+            <h2 class="text-2xl font-bold font-azonix text-orange">Loading...</h2>
             }
-            <p-button label="Add Product" styleClass="!ml-auto !text-2xl !font-semibold !font-roboto !text-gray_dark !bg-light_orange !rounded-md !py-1 !px-8" (click)="showDialog()"/>
+            <p-button label="Add Product"
+                styleClass="!ml-auto !text-2xl !font-semibold !font-roboto !text-gray_dark !bg-light_orange !rounded-md !py-1 !px-8"
+                (click)="showDialog()" [disabled]="isAddingProduct || isCreatingModel || isCreatingQrCodes" />
         </div>
     </div>
 
     <span class="w-min px-20 font-semibold text-lg tracking-wider mt-4 text-gray_light">
-        Press Add Model to <span class="font-semibold text-lg tracking-wider capitalize text-light_orange">Print QR codes</span> for each product Edit Product ONLY when it's upgraded to change its specifications.
+        Press Add Model to
+        <span class="font-semibold text-lg tracking-wider capitalize text-light_orange">Print QR codes</span>
+        for each product Edit Product ONLY when it's upgraded to change its specifications.
     </span>
 
     <div class="w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 my-6">
         @for(product of products; track product?._id) {
-            <div class="w-full flex flex-col items-center font-semibold text-xl gap-2 py-3 px-5 rounded-lg text-light_orange bg-dark">
-                <img [src]="product.image" alt="product" class="w-full h-48 object-contain">
-                <span>{{ product?.name }}</span>
-                <button class="w-full text-xl font-semibold font-roboto capitalize text-gray_dark bg-orange rounded-md py-1" (click)="selectedProduct = product; showAddModelDialogHandler()">
-                    Add Model
-                </button>
-                <button class="!w-full text-xl !font-semibold !font-roboto !capitalize !text-gray_dark !bg-gray !rounded-md !py-1" (click)="navigateToProductDetails(product)">
-                    Edit Product
-                </button>
-            </div>
+        <div
+            class="w-full flex flex-col items-center font-semibold text-xl gap-2 py-3 px-5 rounded-lg text-light_orange bg-dark">
+            <img [src]="product.image" alt="product" class="w-full h-48 object-contain" />
+            <span>{{ product?.name }}</span>
+            <button class="w-full text-xl font-semibold font-roboto capitalize text-gray_dark bg-orange rounded-md py-1"
+                (click)="selectedProduct = product; showAddModelDialogHandler()"
+                [disabled]="isCreatingModel || isCreatingQrCodes">
+                {{ isCreatingModel ? 'Creating...' : 'Add Model' }}
+            </button>
+            <button
+                class="!w-full text-xl !font-semibold !font-roboto !capitalize !text-gray_dark !bg-gray !rounded-md !py-1"
+                (click)="navigateToProductDetails(product)"
+                [disabled]="isAddingProduct || isCreatingModel || isCreatingQrCodes">
+                Edit Product
+            </button>
+        </div>
         }
     </div>
-    
+
+    <!-- Add Model Dialog -->
     <p-dialog [modal]="true" [(visible)]="showAddModelDialog" [style]="{ width: '35vw' }">
         <div class="flex justify-center items-center">
             <h1 class="text-4xl font-bold font-azonix text-orange">Add Model</h1>
@@ -40,9 +49,10 @@
         <div class="flex flex-col items-center gap-4 px-10 my-6">
             <span class="font-semibold text-lg tracking-wider text-light_orange">For Product</span>
             <div class="w-full flex items-center justify-center py-4 rounded-lg bg-dark">
-                <span class="text-2xl font-semibold capitalize font-roboto text-orange">{{ selectedProduct?.name }}</span>
+                <span class="text-2xl font-semibold capitalize font-roboto text-orange">{{ selectedProduct?.name
+                    }}</span>
             </div>
-            <div class="w-full flex items-start py-4 gap-4 rounded-lg ">
+            <div class="w-full flex items-start py-4 gap-4 rounded-lg">
                 <div class="flex flex-col items-end gap-8 mt-2">
                     <label class="text-lg capitalize font-semibold font-roboto text-light_orange">
                         Model
@@ -58,35 +68,46 @@
                             [(ngModel)]="name" [ngModelOptions]="{standalone: true}" placeholder="Type model name" />
                     </div>
                     <div class="w-full px-4 py-1 rounded-md bg-dark">
-                        <input type="text" class="w-full rounded-md p-2 bg-transparent text-light_orange border border-none focus:outline-none" [(ngModel)]="quantity" [ngModelOptions]="{standalone: true}" placeholder="Type number of QR Codes to print" />
+                        <input type="text"
+                            class="w-full rounded-md p-2 bg-transparent text-light_orange border border-none focus:outline-none"
+                            [(ngModel)]="quantity" [ngModelOptions]="{standalone: true}"
+                            placeholder="Type number of QR Codes to print" />
                     </div>
                 </div>
             </div>
             <div class="w-full flex justify-center items-center my-5">
-                <button class="w-max text-xl font-semibold font-roboto capitalize text-gray_dark bg-blue rounded-md px-5 py-1" (click)="createModel()">
-                    create qr codes
+                <button
+                    class="w-max text-xl font-semibold font-roboto capitalize text-gray_dark bg-blue rounded-md px-5 py-1"
+                    (click)="createModel()" [disabled]="isCreatingModel">
+                    {{ isCreatingModel ? 'Creating...' : 'Create QR Codes' }}
                 </button>
             </div>
         </div>
     </p-dialog>
-    
+
+    <!-- QR Codes Dialog -->
     <p-dialog [modal]="true" [(visible)]="showModelQrCodesDialog" [style]="{ width: '35vw' }">
         <div class="flex justify-center items-center">
             <h5 class="text-4xl font-bold font-roboto text-gray_light">Model QR Codes</h5>
         </div>
         <div class="w-full flex flex-col items-center justify-center gap-4 my-8">
             <h2 class="text-2xl text-center font-bold font-roboto text-orange">{{ selectedProduct?.name }}</h2>
-            <button class="w-max mx-auto text-xl font-semibold font-roboto capitalize text-gray_dark bg-orange rounded-md px-5 py-1">print</button>
+            <button
+                class="w-max mx-auto text-xl font-semibold font-roboto capitalize text-gray_dark bg-orange rounded-md px-5 py-1"
+                (click)="printQrCodes()" [disabled]="isPrinting">
+                {{ isPrinting ? 'Printing...' : 'Print' }}
+            </button>
         </div>
         <div class="w-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 my-6">
             @for(qrCode of qrCodes; track qrCode?._id) {
-                <div class="w-full flex flex-col items-center gap-2 py-3 px-5 rounded-lg ">
-                    <qrcode [qrdata]="qrCode.code" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
-                </div>
+            <div class="w-full flex flex-col items-center gap-2 py-3 px-5 rounded-lg">
+                <qrcode [qrdata]="qrCode.fullUrl" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
+            </div>
             }
         </div>
     </p-dialog>
 
+    <!-- Add Product Dialog -->
     <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '35vw' }">
         <div class="flex justify-center items-center">
             <h1 class="text-4xl font-bold font-azonix text-orange">Add Product</h1>
@@ -96,39 +117,51 @@
                 <label class="text-lg font-medium font-roboto text-light_orange" for="name">Product Name</label>
                 <input type="text"
                     class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none"
-                     formControlName="name" />
+                    formControlName="name" />
             </div>
+
             <div class="w-full flex flex-col gap-2 items-start">
                 <label class="text-lg font-medium font-roboto text-light_orange" for="watt">Watt</label>
                 <input type="text"
-                    class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none" formControlName="watt"/>
+                    class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none"
+                    formControlName="watt" />
             </div>
+
             <div class="w-full flex flex-col gap-2 items-start">
                 <label class="text-lg font-medium font-roboto text-light_orange" for="lumen">Lumen</label>
                 <input type="text"
-                    class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none" formControlName="lumen"/>
+                    class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none"
+                    formControlName="lumen" />
             </div>
+
             <div class="w-full flex flex-col gap-2 items-start">
                 <label class="text-lg font-medium font-roboto text-light_orange" for="description">Description</label>
                 <textarea
                     class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none"
-                     rows="3" cols="30" formControlName="description"></textarea>
+                    rows="3" cols="30" formControlName="description"></textarea>
             </div>
+
             <div class="w-full flex flex-col gap-2 items-start">
                 <label class="text-lg font-medium font-roboto text-light_orange" for="category">Category</label>
-                <p-select [options]="categories" optionLabel="name" optionValue="_id" placeholder="Select Category" class="w-full" formControlName="category"></p-select>
+                <p-select [options]="categories" optionLabel="name" optionValue="_id" placeholder="Select Category"
+                    class="w-full" formControlName="category"></p-select>
             </div>
+
             <div class="w-full flex flex-col gap-2 items-center rounded-md bg-gray_light" (click)="fileInput.click()">
                 <input #fileInput accept="image/*" type="file" class="hidden" (change)="onBasicUploadAuto($event)" />
-                <p-button label="Upload Image" styleClass="!mx-auto !text-xl !font-semibold !font-roboto !text-dark !bg-gray_light !rounded-md !p-2 !border-none"/>
+                <p-button label="Upload Image"
+                    styleClass="!mx-auto !text-xl !font-semibold !font-roboto !text-dark !bg-gray_light !rounded-md !p-2 !border-none" />
             </div>
-            @if(imagePreview){
-                <img [src]="imagePreview" class="w-40 h-40 object-cover rounded-md mx-auto mt-4" />
-            }
 
+            @if(imagePreview){
+            <img [src]="imagePreview" class="w-40 h-40 object-cover rounded-md mx-auto mt-4" />
+            }
         </form>
+
         <div class="flex justify-center items-center">
-            <p-button label="Save" styleClass="!px-5 !py-1 !text-2xl !font-bold !font-roboto !text-gray_dark !border-none !bg-orange !rounded-md" (click)="addNewProduct()" />
+            <p-button label="{{ isAddingProduct ? 'Saving...' : 'Save' }}"
+                styleClass="!px-5 !py-1 !text-2xl !font-bold !font-roboto !text-gray_dark !border-none !bg-orange !rounded-md"
+                (click)="addNewProduct()" [disabled]="isAddingProduct" />
         </div>
     </p-dialog>
 </app-side-nav>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { removeNullishFieldsParams } from '../../../core/utilities/helper-function';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,9 @@ export class WarrantyService {
 
   constructor(private _http: HttpClient) { }
 
-  getAllWarranties() {
-    return this._http.get(`${this.baseUrl}warranties`);
+  getAllWarranties(params?: any) {
+    params = removeNullishFieldsParams(params);
+    return this._http.get(`${this.baseUrl}warranties`, { params });
   }
 
   getWarrantyById(id: number) {

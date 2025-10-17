@@ -9,10 +9,14 @@ import { SideNav } from '../../../layout/components/side-nav/side-nav';
 import { WarnComponent } from "../../../assets/warn/warn.component";
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { WarrantyService } from '../../services/warranty.service';
+import { FluidModule } from 'primeng/fluid';
+import { DatePickerModule } from 'primeng/datepicker';
+import { format } from 'date-fns';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-warranties',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginatorModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNav, WarnComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginatorModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNav, WarnComponent, DatePickerModule, FluidModule],
   templateUrl: './warranties.component.html',
   styleUrl: './warranties.component.scss'
 })
@@ -34,17 +38,9 @@ export class WarrantiesComponent {
   currentPage = 1;
   by_date: any;
   selectedWarranty: any;
-  by_dateOptions: any[] = [
-    {
-      name: 'By Date'
-    },
-    {
-      name: 'By Month'
-    },
-    {
-      name: 'By Year'
-    }
-  ];
+  search: string;
+  date: Date | string | undefined ;
+  searchSubject = new Subject<string>();
   first1: number = 0;
   rows1: number = 0;
 
@@ -55,14 +51,34 @@ export class WarrantiesComponent {
 
   ngOnInit() {
     this.getAllWarranties();
+
+    this.searchSubject
+      .pipe(
+        debounceTime(500), // wait 500ms after user stops typing
+        distinctUntilChanged()
+      )
+      .subscribe(value => {
+        this.search = value;
+        this.getAllWarranties(); // trigger search
+      });
   }
 
   getAllWarranties() {
-    this._warrantyService.getAllWarranties().subscribe({
+    this.date && (this.date = format(this.date, 'yyyy-MM-dd'));
+    let params = {
+      page: this.currentPage,
+      search: this.search,
+      date: this.date
+    }
+    this._warrantyService.getAllWarranties(params).subscribe({
       next: (res: any) => {
         this.warranties = res.data;
       }
     });
+  }
+
+  onSearchChange(value: string) {
+    this.searchSubject.next(value);
   }
 
   initializeChangeForm() {
