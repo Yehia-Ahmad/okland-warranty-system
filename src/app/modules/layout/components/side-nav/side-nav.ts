@@ -37,10 +37,13 @@ export class SideNav implements AfterViewInit {
   }
 
   toggleSidenav(event) {
+    console.log(event);
     this.isSidenavCollapsed = event;
     this.customSidenav.isSidenavCollapsed = event;
     this.sidenavWidth = computed(() => {
       return this.isSidenavCollapsed ? '100px' : '250px';
     });
+    this.sidenavWidth()
+    console.log(this.sidenavWidth());
   }
 }

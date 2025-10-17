@@ -113,12 +113,21 @@ export class CustomSidenav implements OnInit {
   }
 
   toggleCategory(category: string) {
-    this.expandedCategory = this.expandedCategory === category ? null : category;
+    if (this.isSidenavCollapsed) {
+      this.openSidenav();
+      // Wait a bit to allow sidenav to expand smoothly before showing children
+      setTimeout(() => {
+        this.expandedCategory = category;
+      }, 300); // adjust delay to match your sidenav animation time
+    } else {
+      this.expandedCategory = this.expandedCategory === category ? null : category;
+    }
   }
+
 
   openSidenav() {
     this.isSidenavCollapsed = false
-    this.collapsedSidenav.emit(true)
+    this.collapsedSidenav.emit(this.isSidenavCollapsed);
   }
 
   openDialog(): void {

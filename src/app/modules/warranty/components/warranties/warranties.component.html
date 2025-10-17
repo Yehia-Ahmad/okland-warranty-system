@@ -45,12 +45,12 @@
                             <div class="flex flex-col items-start gap-4">
                                 <button
                                     class="bg-blue text-[#1f1f1f] font-semibold px-4 py-1 rounded-md mr-2"
-                                    (click)="showDialog('change')">
+                                    (click)="showDialog('change', warranty)">
                                     SHOW QR
                                 </button>
                                 <button
                                     class="bg-[#e84c0d] hover:bg-[#c43f0b] text-white font-semibold px-4 py-1 rounded-md"
-                                    (click)="showDeleteDialog()">
+                                    (click)="showDeleteDialog(warranty)">
                                     REMOVE
                                 </button>
                             </div>
@@ -66,18 +66,6 @@
             <p-paginator (onPageChange)="onPageChange1($event)" [first]="first1" [rows]="rows1" [totalRecords]="120"
                 [showFirstLastIcon]="false" />
         </div>
-        <!-- <div class="w-full flex items-center justify-center mt-4 space-x-2 text-gray-400">
-            <button class="px-2 text-light_orange">&lt;</button>
-            @for(page of pages;track $index){
-                <button class="w-7 h-7 rounded-lg text-sm font-medium text-light_orange" [ngClass]="{
-                          'bg-orange text-dark': page === currentPage,
-                          'hover:text-orange': page !== currentPage
-                        }" (click)="goToPage(page)">
-                    {{ page }}
-                </button>
-            }
-            <button class="px-2 text-light_orange">&gt;</button>
-        </div> -->
 
     </div>
     <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '35vw', height: '68vh' }">

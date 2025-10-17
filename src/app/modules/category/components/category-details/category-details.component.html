@@ -121,10 +121,10 @@
             <div class="w-full flex flex-col gap-2 items-center rounded-md bg-gray_light" (click)="fileInput.click()">
                 <input #fileInput accept="image/*" type="file" class="hidden" (change)="onBasicUploadAuto($event)" />
                 <p-button label="Upload Image" styleClass="!mx-auto !text-xl !font-semibold !font-roboto !text-dark !bg-gray_light !rounded-md !p-2 !border-none"/>
-                @if(imagePreview){
-                    <img [src]="imagePreview" class="w-40 h-40 object-cover rounded-md mx-auto mt-4" />
-                }
             </div>
+            @if(imagePreview){
+                <img [src]="imagePreview" class="w-40 h-40 object-cover rounded-md mx-auto mt-4" />
+            }
 
         </form>
         <div class="flex justify-center items-center">

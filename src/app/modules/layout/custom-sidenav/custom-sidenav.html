@@ -10,6 +10,7 @@
         [style.margin-bottom]="'1rem'"
         [style.padding]="'0.5rem'"
         [style.background-color]="rla.isActive ? '#FF9933' : '#FFDFC2'"
+        (click)="item.children ? toggleCategory(item.label) : null"
         [style.color]="'#2F2F2F'"
         [routerLink]="item.route"
         routerLinkActive
