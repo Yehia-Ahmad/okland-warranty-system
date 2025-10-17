@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, signal, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, signal, SimpleChanges } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CateoryService } from '../../category/services/cateory.service';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LogoutComponent } from "../../assets/logout/logout.component";
+import { WarnComponent } from "../../assets/warn/warn.component";
 
 export type MenuItem = {
   label: string;
@@ -20,7 +22,7 @@ export type MenuItem = {
 @Component({
   selector: 'app-custom-sidenav',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatListModule, RouterModule, DialogModule, ButtonModule, InputTextModule, TextareaModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatListModule, RouterModule, DialogModule, ButtonModule, InputTextModule, TextareaModule, LogoutComponent, WarnComponent],
   templateUrl: './custom-sidenav.html',
   styleUrl: './custom-sidenav.scss'
 })
@@ -31,9 +33,10 @@ export class CustomSidenav implements OnInit {
   expandedCategory: string | null = null;
   categories: any[] = [];
   visible: boolean = false;
+  logoutVisible: boolean = false;
   addCategory: FormGroup;
 
-  constructor(private sanitizer: DomSanitizer, private _cateoryService: CateoryService, private fb: FormBuilder) {
+  constructor(private sanitizer: DomSanitizer, private _cateoryService: CateoryService, private fb: FormBuilder, private cdr: ChangeDetectorRef, private _router: Router) {
     this.initalizeAddCategory();
   }
 
@@ -144,5 +147,19 @@ export class CustomSidenav implements OnInit {
       this.getAllCategories();
       this.closeDialog();
     })
+  }
+
+  openLogoutDialog() {
+    this.logoutVisible = true;
+  }
+
+  closeLogoutDialog() {
+    this.logoutVisible = false;
+  }
+
+  confirmLogout() {
+    this.logoutVisible = false;
+    localStorage.removeItem('access_token');
+    this._router.navigate(['/login']);
   }
 }
