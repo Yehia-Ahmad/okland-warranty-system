@@ -58,7 +58,6 @@ export class CustomSidenav implements OnInit {
       res.data.map((category: any) => {
         this.categories.push({ label: category.name, route: `/categories/${category._id}` })     
       });
-      console.log(this.categories);
       this.buildMenuItems();
     })
   }

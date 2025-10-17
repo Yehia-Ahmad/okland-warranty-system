@@ -33,13 +33,11 @@ export class LoginComponent {
     let payload = this.loginForm.value;
     this._authService.login(payload).subscribe({
       next: (res: any) => {
-        console.log(res);
         this._diskService.accessToken = res.data.token;
         this._diskService.user = res.data.user;
         this._router.navigate(['home']);
       },
       error: (error) => {
-        console.log(error);
       }
     });
   }

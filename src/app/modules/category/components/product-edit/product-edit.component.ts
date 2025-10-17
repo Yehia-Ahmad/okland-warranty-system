@@ -20,6 +20,7 @@ export class ProductEditComponent {
   watt: any;
   lumen: any;
   description: any;
+  loading: boolean = false;
   deleteVisible: boolean = false;
 
   constructor(private cdr: ChangeDetectorRef, private _router: Router, private _cateoryService: CateoryService, private _activatedRoute: ActivatedRoute, private location: Location) {
@@ -33,8 +34,10 @@ export class ProductEditComponent {
   }
 
   getProductById() {
+    this.loading = true;
     this._cateoryService.getProductById(this.productId).subscribe({
       next: (res: any) => {
+        this.loading = false;
         this.product = res.data;
         this.cdr.detectChanges();
       }
@@ -42,8 +45,10 @@ export class ProductEditComponent {
   }
 
   deleteProduct() {
+    this.loading = true;
     this._cateoryService.deleteProduct(this.productId).subscribe({
       next: (res: any) => {
+        this.loading = false;
         this.cdr.detectChanges();
         this.location.back();
       }

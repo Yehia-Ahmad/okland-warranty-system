@@ -41,4 +41,36 @@ export class CateoryService {
   deleteProduct(id: number) {
     return this._http.delete(`${this._baseUrl}products/${id}`);
   }
+
+  createModel(model: any) {
+    return this._http.post(`${this._baseUrl}models`, model);
+  }
+
+  getModelById(id: number) {
+    return this._http.get(`${this._baseUrl}models/${id}`);
+  }
+
+  updateModel(id: number, model: any) {
+    return this._http.patch(`${this._baseUrl}models/${id}`, model);
+  }
+
+  getAllModels() {
+    return this._http.get(`${this._baseUrl}models`);
+  }
+
+  deleteModel(id: number) {
+    return this._http.delete(`${this._baseUrl}models/${id}`);
+  }
+
+  createQRCode(model_id: number, payload: any) {
+    return this._http.post(`${this._baseUrl}models/${model_id}/qr-codes`, payload);
+  }
+
+  veryQrCode(qr_id: number) {
+    return this._http.get(`${this._baseUrl}models/verify-qr/${qr_id}`);
+  }
+
+  printQrCodes(payload: any) {
+    return this._http.post(`${this._baseUrl}models/print-qr`, payload);
+  }
 }
