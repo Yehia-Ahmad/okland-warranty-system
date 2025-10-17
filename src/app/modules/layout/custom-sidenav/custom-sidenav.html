@@ -1,0 +1,140 @@
+<mat-nav-list>
+  @if(isSidenavCollapsed) {
+    @for(item of menuItems(); track $index) {
+      <a
+        mat-list-item
+        (click)="openSidenav()"
+        [style.width]="'75%'"
+        [style.border-radius]="'8px'"
+        [style.margin]="'0 auto'"
+        [style.margin-bottom]="'1rem'"
+        [style.padding]="'0.5rem'"
+        [style.background-color]="rla.isActive ? '#FF9933' : '#FFDFC2'"
+        [style.color]="'#2F2F2F'"
+        [routerLink]="item.route"
+        routerLinkActive
+        #rla="routerLinkActive"
+        [activated]="rla.isActive"
+      >
+        <span matListItemIcon [innerHTML]="item.icon"></span>
+      </a>
+    }
+  } @else {
+    @for (item of menuItems(); track $index) {
+      <div>
+        <!-- Main Menu Item -->
+        <a
+          mat-list-item
+          [routerLink]="item.route"
+          routerLinkActive
+          #rla="routerLinkActive"
+          [activated]="rla.isActive"
+          (click)="item.children ? toggleCategory(item.label) : null"
+          [style.width]="'90%'"
+          [style.background-color]="rla.isActive ? '#FF9933' : '#FFDFC2'"
+          [style.color]="'#2F2F2F'"
+          [style.margin]="'1rem'"
+          [style.border-radius]="'8px'"
+          [style.display]="'flex'"
+          [style.align-items]="'center'"
+        >
+          <span matListItemIcon [innerHTML]="item.icon"></span>
+          <span
+            matListItemTitle
+            [style.margin-left]="'0.5rem'"
+            [style.font-weight]="'600'"
+            [style.font-size]="'longer'"
+          >
+            {{ item.label }}
+          </span>
+          @if (item.children) {
+            <span class="ml-auto">
+              <svg
+                [style.transform]="expandedCategory === item.label ? 'rotate(180deg)' : 'rotate(0deg)'"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#FF9933"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-chevron-down transition-transform duration-200"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          }
+        </a>
+
+        <!-- Sub-items -->
+        @if (item.children && expandedCategory === item.label) {
+          <div class="ml-10 mt-2 space-y-2">
+            @for (child of item.children; track $index) {
+              <a
+                mat-list-item
+                [routerLink]="child.route"
+                routerLinkActive
+                #rla="routerLinkActive"
+                [activated]="rla.isActive"
+                [style.width]="'90%'"
+                [style.display]="'block'"
+                [style.padding]="'0.5rem 0.8rem'"
+                [style.border-radius]="'6px'"
+                [style.background-color]="rla.isActive ? '#FF9933' : '#2F2F2F'"
+                [style.color]="rla.isActive ? '#2F2F2F' : '#FFDFC2'"
+              >
+                {{ child.label }}
+              </a>
+            }
+
+            <!-- Add New Category Button -->
+            <button
+              mat-button
+              (click)="openDialog()"
+              [style.width]="'100%'"
+              [style.margin-inline-start]="'-35px'"
+              [style.background]="'transparent'"
+              [style.color]="'#BDBDBD'"
+              [style.border]="'none'"
+              [style.font-weight]="'600'"
+              [style.text-transform]="'uppercase'"
+              [style.padding]="'0.5rem 0.8rem'"
+              [style.margin-top]="'0.5rem'"
+              [style.text-align]="'left'"
+              [style.cursor]="'pointer'"
+              [style.font-size]="'0.9rem'"
+              [style.letter-spacing]="'0.5px'"
+              [style.transition]="'color 0.2s ease'"
+            >
+              + Add New Category
+            </button>
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '35vw' }">
+        <div class="flex justify-center items-center">
+          <h1 class="text-2xl font-bold font-azonix text-orange">Add New Category</h1>
+        </div>
+        <form class="flex flex-col gap-4 my-6" [formGroup]="addCategory">
+            <div class="w-full flex flex-col gap-2 items-start">
+                <label class="text-lg font-medium font-roboto text-light_orange" for="name">Name</label>
+                <input type="text"
+                    class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none"
+                     formControlName="name" />
+            </div>
+            <div class="w-full flex flex-col gap-2 items-start">
+                <label class="text-lg font-medium font-roboto text-light_orange" for="description">Description</label>
+                <textarea
+                    class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none"
+                     rows="5" cols="30" formControlName="description"></textarea>
+            </div>
+        </form>
+        <div class="flex justify-center items-center">
+            <p-button label="Save" severity="warn" (click)="addNewCategory()" />
+        </div>
+    </p-dialog>
+</mat-nav-list>
