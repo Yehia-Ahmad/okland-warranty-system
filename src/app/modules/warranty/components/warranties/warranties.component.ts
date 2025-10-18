@@ -16,14 +16,18 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ThemeService } from '../../../shared/services/theme.service';
 import { ErrorIconComponent } from "../../../assets/error/error-icon.component";
+import { environment } from '../../../../../environments/environment';
+import { QRCodeComponent } from "angularx-qrcode";
+import { PaginationComponent } from "../../../shared/components/pagination/pagination.component";
 
 @Component({
   selector: 'app-warranties',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginatorModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNavComponent, WarnComponent, DatePickerModule, FluidModule, TranslatePipe, ErrorIconComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginatorModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNavComponent, WarnComponent, DatePickerModule, FluidModule, TranslatePipe, ErrorIconComponent, QRCodeComponent, PaginationComponent],
   templateUrl: './warranties.component.html',
   styleUrl: './warranties.component.scss'
 })
 export class WarrantiesComponent {
+  private baseUrl = environment.api_base_url;
   warranties: any[] = [];
   visible: boolean = false;
   deleteVisible: boolean = false;
@@ -37,10 +41,10 @@ export class WarrantiesComponent {
       name: 'Customer'
     }
   ];
-  pages = [1, 2, 3, 4, '...', 10];
   currentPage = 1;
+  totalPages = 1;
   by_date: any;
-  selectedWarranty: any;
+  selectedWarranty: any = {};
   search: string;
   date: Date | string | undefined ;
   searchSubject = new Subject<string>();
@@ -79,7 +83,18 @@ export class WarrantiesComponent {
     }
     this._warrantyService.getAllWarranties(params).subscribe({
       next: (res: any) => {
+        this.baseUrl = environment.api_base_url.replace('api/', 'api');
+        console.log(this.baseUrl);
+        res.data = res.data.map((warranty: any) => {
+          return {
+            ...warranty,
+            fullUrl: `${this.baseUrl}${warranty.invoiceImage}`
+          }
+        });
+        console.log(res);
         this.warranties = res.data;
+        this.totalPages = res.pages;
+        this.cdr.detectChanges();
       }, error: (err: any) => {
         this.errorVisible = true;
         this.errorMessage = err.error.message;
@@ -118,6 +133,7 @@ export class WarrantiesComponent {
       next: (res: any) => {
         this.getAllWarranties();
         this.deleteVisible = false;
+        this.cdr.detectChanges();
       }, error: (err: any) => {
         this.errorVisible = true;
         this.errorMessage = err.error.message;
@@ -139,5 +155,12 @@ export class WarrantiesComponent {
   onPageChange1(event: PaginatorState) {
     this.first1 = event.first ?? 0;
     this.rows1 = event.rows ?? 10;
+  }
+  
+  onPageChange(page: number) {
+    console.log('Selected page:', page);
+    // call your API with new page here
+    this.currentPage = page;
+    this.getAllWarranties();
   }
 }

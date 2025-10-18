@@ -60,15 +60,17 @@ export class ActivateWarrantyComponent {
   onBasicUploadAuto(event: any) {
     const file = event.target.files[0];
     if (file) {
+      // Optional: show image preview
       const reader = new FileReader();
-
       reader.onload = () => {
-        const base64String = reader.result as string;
-        this.imagePreview = base64String;
-        this.activateForm.invoiceImage = base64String;
+        this.imagePreview = reader.result as string;
       };
-
       reader.readAsDataURL(file);
+
+      // Prepare FormData to send binary
+      const formData = new FormData();
+      this.activateForm.invoiceImage = file; // 'invoiceImage' is the backend field name
+      console.log(formData.get('invoiceImage'));
     }
   }
 

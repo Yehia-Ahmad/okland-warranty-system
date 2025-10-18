@@ -43,11 +43,11 @@
                         <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
                                 'text-light_orange': isDarkMode$ | async,
                                 'text-orange': !(isDarkMode$ | async)
-                            }">{{ warranty.product }}</td>
+                            }">{{ warranty.product.name }}</td>
                         <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
                                 'text-light_orange': isDarkMode$ | async,
                                 'text-orange': !(isDarkMode$ | async)
-                            }">{{ warranty.model }}</td>
+                            }">{{ warranty.model.name }}</td>
                         <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
                                 'text-light_orange': isDarkMode$ | async,
                                 'text-orange': !(isDarkMode$ | async)
@@ -60,16 +60,16 @@
                                 'text-light_orange': isDarkMode$ | async,
                                 'text-orange': !(isDarkMode$ | async)
                             }">
-                            <img src="{{ warranty.invoice }}" alt="Invoice" class="w-16 h-16">
+                            <img src="{{ warranty.fullUrl }}" alt="Invoice" class="w-16 h-16">
                         </td>
                         <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
                                 'text-light_orange': isDarkMode$ | async,
                                 'text-orange': !(isDarkMode$ | async)
-                            }">{{ warranty.remaining }}</td>
+                            }">{{ warranty.remainingDays }}</td>
                         <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
                                 'text-light_orange': isDarkMode$ | async,
                                 'text-orange': !(isDarkMode$ | async)
-                            }">{{ warranty.expiry }}</td>
+                            }">{{ warranty.expiryDate | date : 'yyyy-MM-dd' }}</td>
                         <td class="py-4 px-4 text-center">
                             <div class="flex flex-col items-start gap-4">
                                 <button
@@ -90,11 +90,14 @@
             </table>
 
         </div>
-        <!-- Pagination -->
-        <div class="mx-auto">
-            <p-paginator (onPageChange)="onPageChange1($event)" [first]="first1" [rows]="rows1" [totalRecords]="120"
-                [showFirstLastIcon]="false" />
-        </div>
+        @if(warranties.length != 0){
+            <!-- Pagination -->
+            <!-- <div class="mx-auto">
+                <p-paginator (onPageChange)="onPageChange1($event)" [first]="1" [rows]="1" [totalRecords]="120"
+                    [showFirstLastIcon]="false" />
+            </div> -->
+            <app-pagination class="mx-auto" [totalPages]="totalPages" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+        }
 
     </div>
     <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '35vw', height: '68vh' }">
@@ -102,7 +105,7 @@
             <div class="w-full flex flex-col items-center">
                 <span class="font-semibold text-lg leading-7 tracking-wider text-light_orange">{{ 'warranty.productName' | translate }}</span>
                 <div class="w-full flex items-center justify-center rounded-md py-4 font-bold text-2xl leading-7 tracking-wide font-roboto text-orange bg-[#1f1f1f]">
-                    Android HD
+                    {{ selectedWarranty?.product?.name }}
                 </div>
             </div>
             <div class="w-full flex flex-col items-center">
@@ -110,10 +113,12 @@
                     {{ 'warranty.modal' | translate }}
                 </span>
                 <div class="w-full flex items-center justify-center rounded-md py-4 font-bold text-2xl leading-7 tracking-wide font-roboto text-gray_light bg-[#1f1f1f]">
-                    MTK 9INCH 2-32
+                    {{ selectedWarranty?.model?.name }}
                 </div>
             </div>
-            <img src="assets/img/qr.png" alt="qr" class="w-64 h-64 object-cover">
+            @if(selectedWarranty?.modal?.qrCodes.length > 0) {
+                <qrcode [qrdata]="selectedWarranty?.modal?.qrCodes[0]?.code" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
+            }
         </div>
     </p-dialog>
     <p-dialog [(visible)]="deleteVisible" styleClass="!border-0">
