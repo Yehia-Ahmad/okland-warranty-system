@@ -7,11 +7,12 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { AdminsService } from '../../services/admins.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-admins',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNavComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNavComponent, TranslatePipe],
   templateUrl: './admins.component.html',
   styleUrl: './admins.component.scss'
 })

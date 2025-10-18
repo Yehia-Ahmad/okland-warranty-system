@@ -5,11 +5,13 @@ import { MenuOpen } from "../../../assets/menu-open/menu-open";
 import { Mode } from "../../../assets/mode/mode";
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
+import { LanguageService } from '../../../shared/services/translation.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FormsModule, SelectModule, ButtonModule, MenuOpen, Mode],
+  imports: [CommonModule, FormsModule, SelectModule, ButtonModule, MenuOpen, Mode, TranslatePipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -19,23 +21,33 @@ export class HeaderComponent {
   i18n: any[] = [
     {
       name:'English',
-      code:'en'
+      id:'en'
     },
     {
       name:'Arabic',
-      code:'ar'
+      id:'ar'
     },
     {
       name: 'Chinese',
-      code: 'zh'
+      id: 'zh'
     }
   ];
-  selectedLanguage: string = this.i18n[0];
+  currentLang: string;
 
-  constructor() { }
+  constructor(private _languageService: LanguageService) {
+    this.currentLang = _languageService.selectedLanguage();
+    console.log(this.currentLang);
+
+  }
 
   ngAfterViewInit() {
     this.toggleSidenav();
+  }
+
+  onLanguageChange(lang: string) {
+    console.log(lang);
+    this._languageService.changeLanguage(lang);
+    this.currentLang = lang;
   }
 
   toggleSidenav() {

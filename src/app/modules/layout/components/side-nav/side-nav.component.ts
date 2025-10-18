@@ -2,18 +2,18 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, computed, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HeaderComponent } from "../header/header.component";
-import { CustomSidenav } from "../../custom-sidenav/custom-sidenav";
+import { CustomSidenavComponent } from "../../custom-sidenav/custom-sidenav.component";
 
 @Component({
   selector: 'app-side-nav',
   standalone: true,
-  imports: [CommonModule, MatSidenavModule, HeaderComponent, CustomSidenav],
+  imports: [CommonModule, MatSidenavModule, HeaderComponent, CustomSidenavComponent],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.scss'
 })
 export class SideNavComponent implements AfterViewInit {
   @ViewChild('headerRef', { read: ElementRef }) headerRef!: ElementRef;
-  @ViewChild('customSidenav') customSidenav!: CustomSidenav;
+  @ViewChild('customSidenav') customSidenav!: CustomSidenavComponent;
   isSidenavCollapsed = true;
   sidenavWidth = computed(() => {
     return this.isSidenavCollapsed ? '100px' : '250px';

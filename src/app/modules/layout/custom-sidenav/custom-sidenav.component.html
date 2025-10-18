@@ -47,7 +47,7 @@
               [style.font-weight]="'600'"
               [style.font-size]="'longer'"
             >
-              {{ item.label }}
+              {{ item.label | translate }}
             </span>
             @if (item.children) {
               <span class="ml-auto">
@@ -109,7 +109,7 @@
                 [style.letter-spacing]="'0.5px'"
                 [style.transition]="'color 0.2s ease'"
               >
-                + Add New Category
+                + {{ 'sidebarTitles.add_new_category' | translate }}
               </button>
             </div>
           }
@@ -139,7 +139,7 @@
       @if(!isSidenavCollapsed){
         <span class="flex items-center text-xl gap-2">
           <app-logout></app-logout>
-          Log out
+          {{ 'logout.title' | translate }}
         </span>
       }@else {
         <app-logout></app-logout>
@@ -150,29 +150,27 @@
   <!-- Dialog for adding new category -->
   <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '35vw' }">
     <div class="flex justify-center items-center">
-      <h1 class="text-2xl font-bold font-azonix text-orange">Add New Category</h1>
+      <h1 class="text-2xl font-bold font-azonix text-orange">{{ 'category.add_new_category' | translate }}</h1>
     </div>
     <form class="flex flex-col gap-4 my-6" [formGroup]="addCategory">
       <div class="w-full flex flex-col gap-2 items-start">
-        <label class="text-lg font-medium font-roboto text-light_orange" for="name">Name</label>
+        <label class="text-lg font-medium font-roboto text-light_orange" for="name">{{ 'category.name' | translate }}</label>
         <input
           type="text"
           class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none"
-          formControlName="name"
+          formControlName="name" placeholder="{{ 'category.namePlaceholder' | translate }}"
         />
       </div>
       <div class="w-full flex flex-col gap-2 items-start">
-        <label class="text-lg font-medium font-roboto text-light_orange" for="description">Description</label>
+        <label class="text-lg font-medium font-roboto text-light_orange" for="description">{{ 'category.description' | translate }}</label>
         <textarea
           class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none"
-          rows="5"
-          cols="30"
-          formControlName="description"
+          rows="5" cols="30" formControlName="description" placeholder="{{ 'category.descriptionPlaceholder' | translate }}"
         ></textarea>
       </div>
     </form>
     <div class="flex justify-center items-center">
-      <p-button label="Save" severity="warn" styleClass="!px-4 !py-1 !bg-orange !text-dark" (click)="addNewCategory()" [disabled]="addCategory.invalid || isSaving"
+      <p-button label="{{ 'category.saveButton' | translate}}" severity="warn" styleClass="!px-4 !py-1 !bg-orange !text-dark" (click)="addNewCategory()" [disabled]="addCategory.invalid || isSaving"
         [loading]="isSaving"></p-button>
     </div>
   </p-dialog>
@@ -185,19 +183,19 @@
           <app-warn></app-warn>
         </div>
         <div class="flex items-center justify-center">
-          <h1 class="text-4xl font-bold font-azonix text-orange">Logout</h1>
+          <h1 class="text-4xl font-bold font-azonix text-orange">{{ 'logout.title' | translate }}</h1>
         </div>
         <h6 class="text-lg text-center font-semibold font-roboto text-light_orange">
-          Are you sure you want to log out?
+          {{ 'logout.logoutMessage' | translate }}
         </h6>
         <div class="mx-auto flex items-center justify-between gap-8">
           <button (click)="closeLogoutDialog()"
             class="w-max px-4 py-2 uppercase text-2xl font-semibold rounded-md text-gray_dark bg-orange font-roboto border border-white/30">
-            No Cancel
+            {{ 'logout.cancelButton' | translate }}
           </button>
           <button (click)="confirmLogout()"
             class="px-4 py-2 w-max uppercase text-xl font-semibold rounded-md text-light_orange bg-red font-roboto border border-white/30">
-            Yes Logout
+            {{ 'logout.logoutButton' | translate }}
           </button>
         </div>
       </div>

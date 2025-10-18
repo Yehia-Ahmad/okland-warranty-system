@@ -7,10 +7,11 @@ import { CateoryService } from '../../services/cateory.service';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { WarnComponent } from "../../../assets/warn/warn.component";
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product-edit',
-  imports: [CommonModule, FormsModule, DialogModule, ButtonModule, SideNavComponent, WarnComponent],
+  imports: [CommonModule, FormsModule, DialogModule, ButtonModule, SideNavComponent, WarnComponent, TranslatePipe],
   templateUrl: './product-edit.component.html',
   styleUrl: './product-edit.component.scss'
 })

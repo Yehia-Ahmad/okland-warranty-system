@@ -6,9 +6,10 @@ import { SideNavComponent } from "../../../layout/components/side-nav/side-nav.c
 import { DialogModule } from "primeng/dialog";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { Select } from "primeng/select";
+import { SelectModule } from "primeng/select";
 import { environment } from '../../../../../environments/environment';
 import { QRCodeComponent } from 'angularx-qrcode';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-category-details',
@@ -21,7 +22,8 @@ import { QRCodeComponent } from 'angularx-qrcode';
     ButtonModule,
     QRCodeComponent,
     SideNavComponent,
-    Select
+    SelectModule,
+    TranslatePipe
   ],
   templateUrl: './category-details.component.html',
   styleUrl: './category-details.component.scss'

@@ -8,16 +8,16 @@
             } @placeholder {
             <h2 class="text-2xl font-bold font-azonix text-orange">Loading...</h2>
             }
-            <p-button label="Add Product"
+            <p-button label="{{ 'category.addProduct.title' | translate }}"
                 styleClass="!ml-auto !text-2xl !font-semibold !font-roboto !text-gray_dark !bg-light_orange !rounded-md !py-1 !px-8"
                 (click)="showDialog()" [disabled]="isAddingProduct || isCreatingModel || isCreatingQrCodes" />
         </div>
     </div>
 
     <span class="w-min px-20 font-semibold text-lg tracking-wider mt-4 text-gray_light">
-        Press Add Model to
-        <span class="font-semibold text-lg tracking-wider capitalize text-light_orange">Print QR codes</span>
-        for each product Edit Product ONLY when it's upgraded to change its specifications.
+        {{ 'category.pressAddModel' | translate }}
+        <span class="font-semibold text-lg tracking-wider capitalize text-light_orange">{{ 'category.printQr' | translate }}</span>
+        {{ 'category.info' | translate }}
     </span>
 
     <div class="w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 my-6">
@@ -29,13 +29,13 @@
             <button class="w-full text-xl font-semibold font-roboto capitalize text-gray_dark bg-orange rounded-md py-1"
                 (click)="selectedProduct = product; showAddModelDialogHandler()"
                 [disabled]="isCreatingModel || isCreatingQrCodes">
-                {{ isCreatingModel ? 'Creating...' : 'Add Model' }}
+                {{ 'category.addModel.title' | translate }}
             </button>
             <button
                 class="!w-full text-xl !font-semibold !font-roboto !capitalize !text-gray_dark !bg-gray !rounded-md !py-1"
                 (click)="navigateToProductDetails(product)"
                 [disabled]="isAddingProduct || isCreatingModel || isCreatingQrCodes">
-                Edit Product
+                {{ 'category.editProduct.title' | translate }}
             </button>
         </div>
         }
@@ -44,21 +44,21 @@
     <!-- Add Model Dialog -->
     <p-dialog [modal]="true" [(visible)]="showAddModelDialog" [style]="{ width: '35vw' }">
         <div class="flex justify-center items-center">
-            <h1 class="text-4xl font-bold font-azonix text-orange">Add Model</h1>
+            <h1 class="text-4xl font-bold font-azonix text-orange">{{ 'category.addModel.title' | translate }}</h1>
         </div>
         <div class="flex flex-col items-center gap-4 px-10 my-6">
-            <span class="font-semibold text-lg tracking-wider text-light_orange">For Product</span>
+            <span class="font-semibold text-lg tracking-wider text-light_orange">{{ 'category.addModel.forProduct' | translate }}</span>
             <div class="w-full flex items-center justify-center py-4 rounded-lg bg-dark">
                 <span class="text-2xl font-semibold capitalize font-roboto text-orange">{{ selectedProduct?.name
                     }}</span>
             </div>
             <div class="w-full flex items-start py-4 gap-4 rounded-lg">
                 <div class="flex flex-col items-end gap-8 mt-2">
-                    <label class="text-lg capitalize font-semibold font-roboto text-light_orange">
-                        Model
+                    <label class="w-max text-lg capitalize font-semibold font-roboto text-light_orange">
+                        {{ 'category.addModel.model' | translate }}
                     </label>
-                    <label class="text-lg capitalize font-semibold font-roboto text-light_orange">
-                        Quantity
+                    <label class="w-max text-lg capitalize font-semibold font-roboto text-light_orange">
+                        {{ 'category.addModel.quantity' | translate }}
                     </label>
                 </div>
                 <div class="w-full flex flex-col items-start gap-4">
@@ -79,7 +79,7 @@
                 <button
                     class="w-max text-xl font-semibold font-roboto capitalize text-gray_dark bg-blue rounded-md px-5 py-1"
                     (click)="createModel()" [disabled]="isCreatingModel">
-                    {{ isCreatingModel ? 'Creating...' : 'Create QR Codes' }}
+                    {{ isCreatingModel ? ('category.addModel.actions.creating' | translate) : ('category.addModel.actions.createQRs' | translate) }}
                 </button>
             </div>
         </div>
@@ -88,7 +88,7 @@
     <!-- QR Codes Dialog -->
     <p-dialog [modal]="true" [(visible)]="showModelQrCodesDialog" [style]="{ width: '35vw' }">
         <div class="flex justify-center items-center">
-            <h5 class="text-4xl font-bold font-roboto text-gray_light">Model QR Codes</h5>
+            <h5 class="text-4xl font-bold font-roboto text-gray_light">{{ "category.qrCodes.title" | translate }}</h5>
         </div>
         <div class="w-full flex flex-col items-center justify-center gap-4 my-8">
             <h2 class="text-2xl text-center font-bold font-roboto text-orange">{{ selectedProduct?.name }}</h2>
@@ -110,46 +110,46 @@
     <!-- Add Product Dialog -->
     <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '35vw' }">
         <div class="flex justify-center items-center">
-            <h1 class="text-4xl font-bold font-azonix text-orange">Add Product</h1>
+            <h1 class="text-4xl font-bold font-azonix text-orange">{{ 'category.addProduct.title' | translate }}</h1>
         </div>
         <form class="flex flex-col gap-4 my-6 px-8" [formGroup]="addProductForm">
             <div class="w-full flex flex-col gap-2 items-start">
-                <label class="text-lg font-medium font-roboto text-light_orange" for="name">Product Name</label>
+                <label class="text-lg font-medium font-roboto text-light_orange" for="name">{{ 'category.addProduct.productName' | translate }}</label>
                 <input type="text"
                     class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none"
                     formControlName="name" />
             </div>
 
             <div class="w-full flex flex-col gap-2 items-start">
-                <label class="text-lg font-medium font-roboto text-light_orange" for="watt">Watt</label>
+                <label class="text-lg font-medium font-roboto text-light_orange" for="watt">{{ 'category.addProduct.watt' | translate }}</label>
                 <input type="text"
                     class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none"
                     formControlName="watt" />
             </div>
 
             <div class="w-full flex flex-col gap-2 items-start">
-                <label class="text-lg font-medium font-roboto text-light_orange" for="lumen">Lumen</label>
+                <label class="text-lg font-medium font-roboto text-light_orange" for="lumen">{{ 'category.addProduct.lumen' | translate }}</label>
                 <input type="text"
                     class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none"
                     formControlName="lumen" />
             </div>
 
             <div class="w-full flex flex-col gap-2 items-start">
-                <label class="text-lg font-medium font-roboto text-light_orange" for="description">Description</label>
+                <label class="text-lg font-medium font-roboto text-light_orange" for="description">{{ 'category.addProduct.description' | translate }}</label>
                 <textarea
                     class="w-full rounded-md p-2 bg-transparent text-light_orange border border-[#696969] focus:outline-none"
                     rows="3" cols="30" formControlName="description"></textarea>
             </div>
 
             <div class="w-full flex flex-col gap-2 items-start">
-                <label class="text-lg font-medium font-roboto text-light_orange" for="category">Category</label>
+                <label class="text-lg font-medium font-roboto text-light_orange" for="category">{{ 'category.addProduct.category' | translate }}</label>
                 <p-select [options]="categories" optionLabel="name" optionValue="_id" placeholder="Select Category"
                     class="w-full" formControlName="category"></p-select>
             </div>
 
             <div class="w-full flex flex-col gap-2 items-center rounded-md bg-gray_light" (click)="fileInput.click()">
                 <input #fileInput accept="image/*" type="file" class="hidden" (change)="onBasicUploadAuto($event)" />
-                <p-button label="Upload Image"
+                <p-button label="{{ imagePreview ? ('category.addProduct.changeImage' | translate) : ('category.addProduct.uploadImage' | translate) }}"
                     styleClass="!mx-auto !text-xl !font-semibold !font-roboto !text-dark !bg-gray_light !rounded-md !p-2 !border-none" />
             </div>
 
@@ -159,7 +159,7 @@
         </form>
 
         <div class="flex justify-center items-center">
-            <p-button label="{{ isAddingProduct ? 'Saving...' : 'Save' }}"
+            <p-button label="{{ isAddingProduct ? ('category.addProduct.actions.creating' | translate ): ( 'category.addProduct.actions.save' | translate) }}"
                 styleClass="!px-5 !py-1 !text-2xl !font-bold !font-roboto !text-gray_dark !border-none !bg-orange !rounded-md"
                 (click)="addNewProduct()" [disabled]="isAddingProduct" />
         </div>

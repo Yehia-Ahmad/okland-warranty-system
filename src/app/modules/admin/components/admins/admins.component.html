@@ -1,25 +1,25 @@
 <app-side-nav>
     <div class="w-full flex flex-col items-start gap-8">
         <div class="w-full flex items-center justify-center">
-            <h1 class="text-2xl font-bold font-azonix text-gray_light">system admins</h1>
+            <h1 class="text-2xl font-bold font-azonix text-gray_light">{{ 'admin.title' | translate}}</h1>
         </div>
         <div class="w-full flex items-center justify-between">
-            <p-button label="Add Admin" (click)="showDialog('add')"
+            <p-button label="{{ 'admin.add_Button' | translate}}" (click)="showDialog('add')"
                 styleClass="!px-4 !py-2 !w-full !border-none !text-xl !font-bold !text-gray_dark !bg-orange" />
             <div class="sm:w-1/5 lg:min-w-[25%] py-2 px-2 rounded-md text-gray bg-dark hidden sm:block">
                 <input class="border-none outline-none focus:border-none focus:outline-none bg-transparent"
-                    placeholder="Search" />
+                    placeholder="{{'searchPlaceholder' | translate}}" />
             </div>
         </div>
         <div class="w-full bg-[#1f1f1f] p-4 pb-0 rounded-xl">
             <table class="w-full border-collapse text-sm text-gray-300">
                 <thead>
                     <tr class="bg-[#515151] text-gray-200 uppercase text-xs rounded-md">
-                        <th class="py-3 px-4 uppercase text-left text-[#a1a1a1]">Username</th>
-                        <th class="py-3 px-4 uppercase text-left text-[#a1a1a1]">Email</th>
-                        <th class="py-3 px-4 uppercase text-left text-[#a1a1a1]">Number</th>
-                        <th class="py-3 px-4 uppercase text-left text-[#a1a1a1]">Role</th>
-                        <th class="py-3 px-4 uppercase text-center text-[#a1a1a1]">Actions</th>
+                        <th class="py-3 px-4 uppercase text-left text-[#a1a1a1]">{{ 'tableHeaders.username' | translate}}</th>
+                        <th class="py-3 px-4 uppercase text-left text-[#a1a1a1]">{{ 'tableHeaders.email' | translate}}</th>
+                        <th class="py-3 px-4 uppercase text-left text-[#a1a1a1]">{{ 'tableHeaders.number' | translate}}</th>
+                        <th class="py-3 px-4 uppercase text-left text-[#a1a1a1]">{{ 'tableHeaders.role' | translate}}</th>
+                        <th class="py-3 px-4 uppercase text-center text-[#a1a1a1]">{{ 'tableHeaders.actions' | translate}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,10 +33,10 @@
                                 <div class="flex flex-col items-start gap-4">
                                     <button
                                         class="bg-[#f2c49b] hover:bg-[#f2b77b] text-[#1f1f1f] font-semibold px-4 py-1 rounded-md mr-2" (click)="showDialog('change', admin)">
-                                        CHANGE
+                                        {{ 'admin.change_Button' | translate}}
                                     </button>
                                     <button class="bg-[#e84c0d] hover:bg-[#c43f0b] text-white font-semibold px-4 py-1 rounded-md" (click)="showDeleteDialog(admin)">
-                                        REMOVE
+                                        {{ 'admin.remove_Button' | translate}}
                                     </button>
                                 </div>
                             </td>

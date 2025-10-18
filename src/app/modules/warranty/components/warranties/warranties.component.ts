@@ -13,10 +13,11 @@ import { FluidModule } from 'primeng/fluid';
 import { DatePickerModule } from 'primeng/datepicker';
 import { format } from 'date-fns';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-warranties',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginatorModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNavComponent, WarnComponent, DatePickerModule, FluidModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginatorModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNavComponent, WarnComponent, DatePickerModule, FluidModule, TranslatePipe],
   templateUrl: './warranties.component.html',
   styleUrl: './warranties.component.scss'
 })

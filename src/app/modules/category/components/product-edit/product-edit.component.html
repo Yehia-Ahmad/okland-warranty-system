@@ -1,21 +1,21 @@
 <app-side-nav>
     <h2 class="text-center text-2xl font-bold font-azonix text-[#878787]">
-        Editting Product Details
+        {{ 'category.editProduct.info' | translate }}
     </h2>
     <div class="w-3/4 mx-auto flex items-stretch justify-center gap-8">
         <div class="w-full flex flex-col items-center gap-4 px-10 my-6">
             <div class="w-full flex flex-col items-start justify-start py-4 px-8 rounded-lg bg-gray_bg">
-                <h4 class="text-lg font-semibold font-roboto text-light_orange">Product Name</h4>
+                <h4 class="text-lg font-semibold font-roboto text-light_orange">{{ 'category.editProduct.productName' | translate }}</h4>
                 <h1 class="text-2xl font-bold font-azonix text-orange">{{ product?.name }}</h1>
             </div>
             <div class="w-full flex flex-col items-start px-20 py-8 rounded-lg bg-gray_bg">
                 <div class="w-full flex items-start py-4 gap-4">
                     <div class="flex flex-col items-end gap-8 mt-2">
-                        <label class="text-lg capitalize font-medium font-roboto text-orange">
-                            Watt
+                        <label class="w-max text-lg capitalize font-medium font-roboto text-orange">
+                            {{ 'category.editProduct.watt' | translate }}
                         </label>
-                        <label class="text-lg capitalize font-medium font-roboto text-orange">
-                            lumen
+                        <label class="w-max text-lg capitalize font-medium font-roboto text-orange">
+                            {{ 'category.editProduct.lumen' | translate }}
                         </label>
                     </div>
                     <div class="w-full flex flex-col items-start gap-4">
@@ -34,7 +34,7 @@
                 <div class="w-full flex flex-col items-start py-4 gap-4">
                     <div class="flex flex-col items-end gap-8 mt-2">
                         <label class="text-lg capitalize font-medium font-roboto text-orange">
-                            Description
+                            {{ 'category.editProduct.description' | translate }}
                         </label>
                     </div>
                     <div class="w-full flex flex-col items-start gap-4">
@@ -45,9 +45,6 @@
                         </div>
                     </div>
                 </div>
-                <button class="w-max mx-auto text-xl font-semibold font-roboto capitalize text-[#878787] bg-dark rounded-md py-1 px-12">
-                    Change
-                </button>
             </div>
         </div>
         <div class="w-full flex flex-col items-center justify-center gap-4 px-10 my-6 rounded-lg bg-gray_bg">
@@ -59,10 +56,10 @@
     </div>
     <div class="w-full flex items-center justify-between my-6 mx-auto px-12">
         <button class="px-8 py-1 text-xl font-semibold font-roboto capitalize bg-red text-dark rounded-md" (click)="showDeleteDialog()">
-            delete product
+            {{ 'category.deleteProduct.title' | translate }}
         </button>
         <button class="px-8 py-1 text-xl font-semibold font-roboto capitalize disabled:opacity-50 disabled:cursor-wait bg-orange text-dark rounded-md" [disabled]="loading" (click)="updateProduct()">
-            save & exit
+            {{ 'category.editProduct.actions.save' | translate }}
         </button>
     </div>
 
@@ -74,20 +71,21 @@
                     <app-warn></app-warn>
                 </div>
                 <div class="flex items-center justify-center">
-                    <h1 class="text-4xl font-bold font-azonix text-orange">delete Product</h1>
+                    <h1 class="text-4xl font-bold font-azonix text-orange">{{ 'category.deleteProduct.title' | translate }}</h1>
                 </div>
-                <h6 class="text-lg text-center font-semibold font-roboto text-light_orange">Are you sure you want to delete this
-                    Product ?</h6>
+                <h6 class="text-lg text-center font-semibold font-roboto text-light_orange">
+                    {{ 'category.deleteProduct.deleteMessage' | translate }}
+                </h6>
                 <div class="mx-auto flex items-center justify-between gap-8">
                     <button (click)="closeDialog()"
                         styleClass="" [style]="{ fontWeight: 600 }"
                         class="w-max px-4 py-2 uppercase text-2xl font-semibold rounded-md text-gray_dark bg-orange font-roboto border border-white/30">
-                        No Cancel
+                        {{ 'category.deleteProduct.actions.cancelButton' | translate }}
                     </button>
                     <button (click)="closeDialog()"
                         class="px-4 py-2 w-max uppercase text-xl font-semibold rounded-md text-light_orange bg-red font-roboto border border-white/30" (click)="deleteProduct()"
                         >
-                        Yes Delete
+                        {{ 'category.deleteProduct.actions.deleteButton' | translate }}
                     </button>
                 </div>
             </div>

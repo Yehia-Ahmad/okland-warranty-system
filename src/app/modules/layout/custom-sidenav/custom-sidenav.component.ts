@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, signal, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, EventEmitter, inject, Injector, Input, OnInit, Output, runInInjectionContext, signal, SimpleChanges } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router, RouterModule } from '@angular/router';
@@ -11,6 +11,8 @@ import { TextareaModule } from 'primeng/textarea';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LogoutComponent } from "../../assets/logout/logout.component";
 import { WarnComponent } from "../../assets/warn/warn.component";
+import { LanguageService } from '../../shared/services/translation.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export type MenuItem = {
   label: string;
@@ -22,11 +24,13 @@ export type MenuItem = {
 @Component({
   selector: 'app-custom-sidenav',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatListModule, RouterModule, DialogModule, ButtonModule, InputTextModule, TextareaModule, LogoutComponent, WarnComponent],
-  templateUrl: './custom-sidenav.html',
-  styleUrl: './custom-sidenav.scss'
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatListModule, RouterModule, DialogModule, ButtonModule, InputTextModule, TextareaModule, LogoutComponent, WarnComponent, TranslatePipe],
+  templateUrl: './custom-sidenav.component.html',
+  styleUrl: './custom-sidenav.component.scss'
 })
-export class CustomSidenav implements OnInit {
+export class CustomSidenavComponent implements OnInit {
+  private _injector = inject(Injector);
+  private _languageService = inject(LanguageService);
   isSidenavCollapsed = true;
   @Output() collapsedSidenav = new EventEmitter<boolean>();
   menuItems = signal<MenuItem[]>([]);
@@ -44,6 +48,12 @@ export class CustomSidenav implements OnInit {
   ngOnInit(): void {
     this.getAllCategories();
     this.buildMenuItems();
+    runInInjectionContext(this._injector, () => {
+      effect(() => {
+        const lang = this._languageService.selectedLanguage();
+        this.buildMenuItems();
+      });
+    });
   }
 
   initalizeAddCategory() {
@@ -70,7 +80,7 @@ export class CustomSidenav implements OnInit {
   buildMenuItems() {
     this.menuItems.set([
       {
-        label: 'Admins',
+        label: 'sidebarTitles.admins',
         icon: this.sanitize(`
         <span class="block w-8 h-8">
             <svg width="100%" height="100%" viewBox="0 0 31 26" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +95,7 @@ export class CustomSidenav implements OnInit {
         route: '/admins'
       },
       {
-        label: 'Categories',
+        label: 'sidebarTitles.categories',
         icon: this.sanitize(`
         <span class="block w-8 h-8">
             <svg width="100%" height="100%" viewBox="0 0 31 28" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +110,7 @@ export class CustomSidenav implements OnInit {
         children: this.categories,
       },
       {
-        label: 'Warranties',
+        label: 'sidebarTitles.warranties',
         icon: this.sanitize(`
         <span class="block w-8 h-8">
             <svg width="100%" height="100%" viewBox="0 0 28 34" version="1.1" xmlns="http://www.w3.org/2000/svg"
