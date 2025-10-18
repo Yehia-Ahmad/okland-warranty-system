@@ -8,6 +8,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { WarnComponent } from "../../../assets/warn/warn.component";
 import { TranslatePipe } from '@ngx-translate/core';
+import { ThemeService } from '../../../shared/services/theme.service';
 
 @Component({
   selector: 'app-product-edit',
@@ -23,8 +24,11 @@ export class ProductEditComponent {
   description: any;
   loading: boolean = false;
   deleteVisible: boolean = false;
+  isDarkMode$;
+  imagePreview: string | ArrayBuffer | null = null;
 
-  constructor(private cdr: ChangeDetectorRef, private _router: Router, private _cateoryService: CateoryService, private _activatedRoute: ActivatedRoute, private location: Location) {
+  constructor(private _themeService: ThemeService, private cdr: ChangeDetectorRef, private _router: Router, private _cateoryService: CateoryService, private _activatedRoute: ActivatedRoute, private location: Location) {
+    this.isDarkMode$ = this._themeService.isDarkMode$;
     this.productId = this._activatedRoute.snapshot.params['id'];
   }
 
@@ -73,5 +77,19 @@ export class ProductEditComponent {
 
   closeDialog() {
     this.deleteVisible = false;
+  }
+  
+  onBasicUploadAuto(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        this.imagePreview = base64String;
+        this.product.image = base64String;
+        this.cdr.detectChanges();
+      };
+      reader.readAsDataURL(file);
+    }
   }
 }

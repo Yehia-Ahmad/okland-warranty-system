@@ -83,8 +83,8 @@
                   [style.display]="'block'"
                   [style.padding]="'0.5rem 0.8rem'"
                   [style.border-radius]="'6px'"
-                  [style.background-color]="rla.isActive ? '#FF9933' : '#2F2F2F'"
-                  [style.color]="rla.isActive ? '#2F2F2F' : '#FFDFC2'"
+                  [style.background-color]="rla.isActive ? '#FF9933' : (isDarkMode$ | async) ? '#2F2F2F' : '#e1e0e0'"
+                  [style.color]="rla.isActive ? '#2F2F2F' : (isDarkMode$ | async) ? '#FFDFC2' : '#FF9933'"
                 >
                   {{ child.label }}
                 </a>
@@ -126,7 +126,7 @@
       [style.width]="isSidenavCollapsed ? '60%' : '85%'"
       [style.border-radius]="'8px'"
       [style.color]="'#FF9933'"
-      [style.background-color]="'#2F2F2F'"
+      [style.background-color]="(isDarkMode$ | async) ? '#2F2F2F' : '#e1e0e0'"
       [style.font-weight]="'600'"
       [style.text-transform]="'uppercase'"
       [style.padding]="'1rem'"
@@ -137,7 +137,7 @@
       [style.transition]="'color 0.2s ease'"
     >
       @if(!isSidenavCollapsed){
-        <span class="flex items-center text-xl gap-2">
+        <span class="flex items-center text-xl gap-2" >
           <app-logout></app-logout>
           {{ 'logout.title' | translate }}
         </span>

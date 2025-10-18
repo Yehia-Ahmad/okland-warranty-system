@@ -6,12 +6,20 @@
         <div class="w-full flex items-center justify-between">
             <p-button label="{{ 'admin.add_Button' | translate}}" (click)="showDialog('add')"
                 styleClass="!px-4 !py-2 !w-full !border-none !text-xl !font-bold !text-gray_dark !bg-orange" />
-            <div class="sm:w-1/5 lg:min-w-[25%] py-2 px-2 rounded-md text-gray bg-dark hidden sm:block">
-                <input class="border-none outline-none focus:border-none focus:outline-none bg-transparent"
-                    placeholder="{{'searchPlaceholder' | translate}}" />
+            <div class="sm:w-1/5 lg:min-w-[25%] py-2 px-2 rounded-md hidden sm:block" [ngClass]="{
+                'text-orange bg-gray_dark': isDarkMode$ | async,
+                'border border-orange bg-light_bg text-orange': !(isDarkMode$ | async),
+            }">
+                <input class="border-none outline-none focus:border-none focus:outline-none bg-transparent" [ngClass]="{
+                        'text-orange': !(isDarkMode$ | async),
+                        'text-light_orange ': (isDarkMode$ | async)
+                    }"placeholder="{{'searchPlaceholder' | translate}}" />
             </div>
         </div>
-        <div class="w-full bg-[#1f1f1f] p-4 pb-0 rounded-xl">
+        <div class="w-full p-4 pb-0 rounded-xl" [ngClass]="{
+            'bg-gray_dark': isDarkMode$ | async,
+            'bg-[#f3eded]': !(isDarkMode$ | async)
+        }">
             <table class="w-full border-collapse text-sm text-gray-300">
                 <thead>
                     <tr class="bg-[#515151] text-gray-200 uppercase text-xs rounded-md">
@@ -25,10 +33,22 @@
                 <tbody>
                     @for(admin of admins;track $index){
                         <tr class="" [ngClass]="{'border-b border-b-light_orange': $index < admins.length - 1}">
-                            <td class="py-4 px-4 border-r border-r-[#a1a1a1] text-light_orange">{{ admin.username }}</td>
-                            <td class="py-4 px-4 border-r border-r-[#a1a1a1] text-light_orange">{{ admin.email }}</td>
-                            <td class="py-4 px-4 border-r border-r-[#a1a1a1] text-light_orange">{{ admin.phone }}</td>
-                            <td class="py-4 px-4 border-r border-r-[#a1a1a1] text-light_orange">{{ admin.role }}</td>
+                            <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">{{ admin.username }}</td>
+                            <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">{{ admin.email }}</td>
+                            <td class="py-4 px-4 border-r border-r-[#a1a1a1]"[ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">{{ admin.phone }}</td>
+                            <td class="py-4 px-4 border-r border-r-[#a1a1a1]"[ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">{{ admin.role }}</td>
                             <td class="py-4 px-4 text-center">
                                 <div class="flex flex-col items-start gap-4">
                                     <button

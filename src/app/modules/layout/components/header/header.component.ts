@@ -7,16 +7,19 @@ import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { LanguageService } from '../../../shared/services/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { MoonComponent } from "../../../assets/moon/moon.component";
+import { ThemeService } from '../../../shared/services/theme.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FormsModule, SelectModule, ButtonModule, MenuOpen, Mode, TranslatePipe],
+  imports: [CommonModule, FormsModule, SelectModule, ButtonModule, MenuOpen, Mode, TranslatePipe, MoonComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   @Output() collapsedSidenav = new EventEmitter<boolean>();
+  isDarkMode$;
   collapsed = signal(false);
   i18n: any[] = [
     {
@@ -34,9 +37,10 @@ export class HeaderComponent {
   ];
   currentLang: string;
 
-  constructor(private _languageService: LanguageService) {
+  constructor(private _languageService: LanguageService, private _themeService: ThemeService) {
     this.currentLang = _languageService.selectedLanguage();
     console.log(this.currentLang);
+    this.isDarkMode$ = this._themeService.isDarkMode$
 
   }
 
@@ -56,8 +60,7 @@ export class HeaderComponent {
   }
 
   toggleDarkMode() {
-    const element = document.querySelector('html');
-    element.classList.toggle('my-app-dark');
+    this._themeService.toggleTheme();
   }
 
 }

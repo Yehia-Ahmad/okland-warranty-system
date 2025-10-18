@@ -13,6 +13,7 @@ import { LogoutComponent } from "../../assets/logout/logout.component";
 import { WarnComponent } from "../../assets/warn/warn.component";
 import { LanguageService } from '../../shared/services/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ThemeService } from '../../shared/services/theme.service';
 
 export type MenuItem = {
   label: string;
@@ -40,9 +41,10 @@ export class CustomSidenavComponent implements OnInit {
   isSaving: boolean = false;
   logoutVisible: boolean = false;
   addCategory: FormGroup;
-
-  constructor(private sanitizer: DomSanitizer, private _cateoryService: CateoryService, private fb: FormBuilder, private cdr: ChangeDetectorRef, private _router: Router) {
+  isDarkMode$;
+  constructor(private _themeService: ThemeService, private sanitizer: DomSanitizer, private _cateoryService: CateoryService, private fb: FormBuilder, private cdr: ChangeDetectorRef, private _router: Router) {
     this.initalizeAddCategory();
+    this.isDarkMode$ = this._themeService.isDarkMode$;
   }
 
   ngOnInit(): void {

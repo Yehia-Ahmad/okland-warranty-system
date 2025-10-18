@@ -18,6 +18,9 @@ module.exports = {
             },
             colors: {
                 orange: '#FF9933',
+                light_bg: '#f5f5f5',
+                light_content: '#F8F8F8',
+                light_content_bg: '#ffffff',
                 light_orange: '#FFDFC2',
                 gray_bg: '#252525',
                 brown: '#623B14',

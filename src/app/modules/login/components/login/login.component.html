@@ -1,13 +1,25 @@
-<div class="min-h-screen flex items-center justify-center bg-gray_dark p-4 overflow-auto">
+<div class="min-h-screen flex items-center justify-center bg-gray_dark p-4 overflow-auto" [ngClass]="{
+    'bg-gray_dark': isDarkMode$ | async,
+    'bg-[#f3eded]': !(isDarkMode$ | async)
+}">
     <div
-        class="flex flex-col md:flex-row bg-gray_dark rounded-2xl w-full h-[95vh] p-4 sm:p-6 md:p-12 max-h-[700px]:p-2">
+        class="flex flex-col md:flex-row bg-gray_dark rounded-2xl w-full h-[95vh] p-4 sm:p-6 md:p-12 max-h-[700px]:p-2" [ngClass]="{
+            'bg-gray_dark': isDarkMode$ | async,
+            'bg-[#f3eded]': !(isDarkMode$ | async)
+        }">
 
         <div
-            class="flex flex-col md:flex-row bg-[#111111] rounded-2xl shadow-2xl w-full p-4 sm:p-6 md:p-12 max-[700px]:p-4 max-[700px]:space-y-2">
+            class="flex flex-col md:flex-row rounded-2xl shadow-2xl w-full p-4 sm:p-6 md:p-12 max-[700px]:p-4 max-[700px]:space-y-2" [ngClass]="{
+                'bg-[#111111]': isDarkMode$ | async,
+                'bg-[#f3eded]': !(isDarkMode$ | async)
+            }">
 
             <!-- Left Section -->
             <div
-                class="flex flex-col justify-center items-center text-center bg-[#111111] text-white p-6 sm:p-8 md:p-10 md:w-1/2 space-y-6 sm:space-y-8 max-[700px]:p-4 max-[700px]:space-y-4 max-[700px]:scale-90 max-[700px]:transform">
+                class="flex flex-col justify-center items-center text-center bg-[#111111] text-white p-6 sm:p-8 md:p-10 md:w-1/2 space-y-6 sm:space-y-8 max-[700px]:p-4 max-[700px]:space-y-4 max-[700px]:scale-90 max-[700px]:transform" [ngClass]="{
+                'bg-[#111111]': isDarkMode$ | async,
+                'bg-[#f3eded]': !(isDarkMode$ | async)
+            }">
 
                 <!-- Logo -->
                 <div
@@ -16,11 +28,17 @@
                     <div class="flex flex-col items-center sm:items-start space-y-0 mt-2 sm:mt-4">
                         <img src="assets/img/Okland Typography (Orange).png" class="mb-1 mt-4 w-[130px] lg:w-[200px]" alt="Logo">
                         <h2
-                            class="text-xl lg:text-3xl tracking-widest font-azonix text-light_orange max-[700px]:text-sm">
+                            class="text-xl lg:text-3xl tracking-widest font-azonix max-[700px]:text-sm" [ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">
                             WARRANTY
                         </h2>
                         <h2
-                            class="text-xl lg:text-3xl transform translate-y-[-5px] sm:translate-y-[-10px] tracking-widest font-azonix text-light_orange max-[700px]:text-sm">
+                            class="text-xl lg:text-3xl transform translate-y-[-5px] sm:translate-y-[-10px] tracking-widest font-azonix text-light_orange max-[700px]:text-sm" [ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">
                             SYSTEM
                         </h2>
                     </div>
@@ -32,7 +50,10 @@
 
             <!-- Right Section -->
             <div
-                class="bg-gray_dark text-white p-6 sm:p-8 md:p-10 md:w-1/2 flex flex-col justify-center items-center space-y-6 sm:space-y-8 rounded-2xl max-[700px]:p-4 max-[700px]:space-y-4 max-[700px]:scale-90 max-[700px]:transform">
+                class="bg-gray_dark text-white p-6 sm:p-8 md:p-10 md:w-1/2 flex flex-col justify-center items-center space-y-6 sm:space-y-8 rounded-2xl max-[700px]:p-4 max-[700px]:space-y-4 max-[700px]:scale-90 max-[700px]:transform" [ngClass]="{
+                    'bg-gray_dark': isDarkMode$ | async,
+                    'bg-[#f3eded]': !(isDarkMode$ | async)
+                }">
                 <div class="text-center space-y-2">
                     <h2
                         class="text-orange text-xl md:text-2xl lg:text-4xl 2xl:text-6xl font-semibold tracking-widest font-azonix max-[700px]:text-lg">

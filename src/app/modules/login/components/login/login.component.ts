@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms'; 
 import { DiskService } from '../../../shared/services/disk.service';
 import { Router } from '@angular/router';
+import { ThemeService } from '../../../shared/services/theme.service';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +18,10 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  isDarkMode$;
 
-  constructor(private fb: FormBuilder, private _authService: Auth, private _diskService: DiskService, private _router: Router) {
+  constructor(private _themeService: ThemeService, private fb: FormBuilder, private _authService: Auth, private _diskService: DiskService, private _router: Router) {
+    this.isDarkMode$ = this._themeService.isDarkMode$;
     this.initializeLoginForm();
   }
 

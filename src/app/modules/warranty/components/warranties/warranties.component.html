@@ -4,15 +4,26 @@
             <h1 class="text-2xl font-bold font-azonix text-gray_light">{{ 'warranty.title' | translate}}</h1>
         </div>
         <div class="w-full flex items-center justify-between">
-            <div class="sm:w-1/5 lg:min-w-[25%] py-2 px-2 rounded-md text-orange bg-dark hidden sm:block">
-                <input class="border-none outline-none focus:border-none focus:outline-none bg-transparent"
-                    placeholder="{{'searchPlaceholder' | translate}}" type="text" [(ngModel)]="search" (ngModelChange)="onSearchChange($event)" />
+            <div class="sm:w-1/5 lg:min-w-[25%] py-2 px-2 rounded-md hidden sm:block" [ngClass]="{
+                'text-orange bg-gray_dark': isDarkMode$ | async,
+                'border border-orange bg-light_bg text-orange': !(isDarkMode$ | async),
+            }">
+                <input class="w-full border-none outline-none focus:border-none focus:outline-none bg-transparent" [ngClass]="{
+                        'text-orange': !(isDarkMode$ | async),
+                        'text-light_orange ': (isDarkMode$ | async)
+                    }" placeholder="{{'searchPlaceholder' | translate}}" type="text" [(ngModel)]="search" (ngModelChange)="onSearchChange($event)" />
             </div>
-            <div class="sm:w-1/5 lg:min-w-[25%] py-2 px-2 rounded-md text-gray bg-dark hidden sm:block">
+            <div class="sm:w-1/5 lg:min-w-[25%] px-2 rounded-md hidden sm:block" [ngClass]="{
+                'text-orange bg-gray_dark': isDarkMode$ | async,
+                'border border-orange bg-light_bg text-orange': !(isDarkMode$ | async),
+            }">
                 <p-datepicker  class="w-full bg-transparent" [(ngModel)]="date" (change)="getAllWarranties()" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
             </div>
         </div>
-        <div class="w-full bg-[#1f1f1f] p-4 pb-0 rounded-xl">
+        <div class="w-full p-4 pb-0 rounded-xl" [ngClass]="{
+            'bg-gray_dark': isDarkMode$ | async,
+            'bg-[#f3eded]': !(isDarkMode$ | async)
+        }">
             <table class="w-full border-collapse text-sm text-gray-300">
                 <thead>
                     <tr class="bg-[#515151] text-gray-200 uppercase text-xs rounded-md">
@@ -29,15 +40,36 @@
                 <tbody>
                     @for(warranty of warranties;track $index){
                     <tr class="" [ngClass]="{'border-b border-b-light_orange': $index < warranties.length - 1}">
-                        <td class="py-4 px-4 border-r border-r-[#a1a1a1] text-light_orange">{{ warranty.product }}</td>
-                        <td class="py-4 px-4 border-r border-r-[#a1a1a1] text-light_orange">{{ warranty.model }}</td>
-                        <td class="py-4 px-4 border-r border-r-[#a1a1a1] text-light_orange">{{ warranty.username }}</td>
-                        <td class="py-4 px-4 border-r border-r-[#a1a1a1] text-light_orange">{{ warranty.number }}</td>
-                        <td class="py-4 px-4 border-r border-r-[#a1a1a1] text-light_orange">
+                        <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">{{ warranty.product }}</td>
+                        <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">{{ warranty.model }}</td>
+                        <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">{{ warranty.username }}</td>
+                        <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">{{ warranty.number }}</td>
+                        <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">
                             <img src="{{ warranty.invoice }}" alt="Invoice" class="w-16 h-16">
                         </td>
-                        <td class="py-4 px-4 border-r border-r-[#a1a1a1] text-light_orange">{{ warranty.remaining }}</td>
-                        <td class="py-4 px-4 border-r border-r-[#a1a1a1] text-light_orange">{{ warranty.expiry }}</td>
+                        <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">{{ warranty.remaining }}</td>
+                        <td class="py-4 px-4 border-r border-r-[#a1a1a1]" [ngClass]="{
+                                'text-light_orange': isDarkMode$ | async,
+                                'text-orange': !(isDarkMode$ | async)
+                            }">{{ warranty.expiry }}</td>
                         <td class="py-4 px-4 text-center">
                             <div class="flex flex-col items-start gap-4">
                                 <button

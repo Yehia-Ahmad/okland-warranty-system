@@ -14,6 +14,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { format } from 'date-fns';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ThemeService } from '../../../shared/services/theme.service';
 
 @Component({
   selector: 'app-warranties',
@@ -44,9 +45,11 @@ export class WarrantiesComponent {
   searchSubject = new Subject<string>();
   first1: number = 0;
   rows1: number = 0;
+  isDarkMode$;
 
 
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private _warrantyService: WarrantyService) {
+  constructor(private _themeService: ThemeService, private fb: FormBuilder, private cdr: ChangeDetectorRef, private _warrantyService: WarrantyService) {
+    this.isDarkMode$ = this._themeService.isDarkMode$;
     this.initializeChangeForm();
   }
 

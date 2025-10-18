@@ -1,6 +1,6 @@
 <app-side-nav>
     <div class="flex flex-col gap-8">
-        <div class="flex items-center justify-between p-8 rounded-lg bg-dark">
+        <div class="flex items-center justify-between p-8 rounded-lg bg-dark" [ngClass]="{ 'bg-gray_dark': isDarkMode$ | async, 'bg-[#f3eded]': !(isDarkMode$ | async) }">
             @defer (when categoryDetails) {
             <h2 class="text-2xl font-bold font-azonix text-orange">
                 okland {{ categoryDetails?.name }}

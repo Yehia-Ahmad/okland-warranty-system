@@ -10,6 +10,7 @@ import { SelectModule } from "primeng/select";
 import { environment } from '../../../../../environments/environment';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ThemeService } from '../../../shared/services/theme.service';
 
 @Component({
   selector: 'app-category-details',
@@ -51,14 +52,17 @@ export class CategoryDetailsComponent {
   isCreatingModel: boolean = false;
   isCreatingQrCodes: boolean = false;
   isPrinting: boolean = false;
+  isDarkMode$;
 
   constructor(
+    private _themeService: ThemeService,
     private _cateoryService: CateoryService,
     private _activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private _router: Router
   ) {
+    this.isDarkMode$ = this._themeService.isDarkMode$;
     this._activatedRoute.params.subscribe(params => {
       this.categoryId = params['id'];
       setTimeout(() => {

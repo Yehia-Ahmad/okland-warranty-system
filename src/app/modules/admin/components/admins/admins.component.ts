@@ -8,6 +8,7 @@ import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { AdminsService } from '../../services/admins.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ThemeService } from '../../../shared/services/theme.service';
 
 @Component({
   selector: 'app-admins',
@@ -35,8 +36,10 @@ export class AdminsComponent {
   ];
   pages = [1, 2, 3, 4, '...', 10];
   currentPage = 1;
+  isDarkMode$;
 
-  constructor(private fb: FormBuilder, private _adminsService: AdminsService, private cdr: ChangeDetectorRef) {
+  constructor(private _themeService: ThemeService, private fb: FormBuilder, private _adminsService: AdminsService, private cdr: ChangeDetectorRef) {
+    this.isDarkMode$ = this._themeService.isDarkMode$;
     this.initializeChangeForm();
   }
 
