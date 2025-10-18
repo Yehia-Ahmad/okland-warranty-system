@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { SideNav } from "../../../layout/components/side-nav/side-nav";
+import { SideNavComponent } from "../../../layout/components/side-nav/side-nav.component";
 import { FormsModule } from '@angular/forms';
 import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { WarnComponent } from "../../../assets/warn/warn.component";
 
 @Component({
   selector: 'app-product-edit',
-  imports: [CommonModule, FormsModule, DialogModule, ButtonModule, SideNav, WarnComponent],
+  imports: [CommonModule, FormsModule, DialogModule, ButtonModule, SideNavComponent, WarnComponent],
   templateUrl: './product-edit.component.html',
   styleUrl: './product-edit.component.scss'
 })

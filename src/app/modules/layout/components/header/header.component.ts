@@ -10,16 +10,25 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, FormsModule, SelectModule, ButtonModule, MenuOpen, Mode],
-  templateUrl: './header.html',
-  styleUrl: './header.scss'
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss'
 })
-export class Header {
+export class HeaderComponent {
   @Output() collapsedSidenav = new EventEmitter<boolean>();
   collapsed = signal(false);
   i18n: any[] = [
-    {name:'English'},
-    {name:'Arabic'},
-    { name: 'Chinese'}
+    {
+      name:'English',
+      code:'en'
+    },
+    {
+      name:'Arabic',
+      code:'ar'
+    },
+    {
+      name: 'Chinese',
+      code: 'zh'
+    }
   ];
   selectedLanguage: string = this.i18n[0];
 

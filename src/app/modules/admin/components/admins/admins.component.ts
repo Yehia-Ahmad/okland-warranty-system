@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { SideNav } from "../../../layout/components/side-nav/side-nav";
+import { SideNavComponent } from "../../../layout/components/side-nav/side-nav.component";
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
-import { Table, TableModule } from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { AdminsService } from '../../services/admins.service';
 
 @Component({
   selector: 'app-admins',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNav],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNavComponent],
   templateUrl: './admins.component.html',
   styleUrl: './admins.component.scss'
 })

@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
-import { SideNav } from '../../../layout/components/side-nav/side-nav';
+import { SideNavComponent } from '../../../layout/components/side-nav/side-nav.component';
 import { WarnComponent } from "../../../assets/warn/warn.component";
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { WarrantyService } from '../../services/warranty.service';
@@ -16,7 +16,7 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-warranties',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginatorModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNav, WarnComponent, DatePickerModule, FluidModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginatorModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNavComponent, WarnComponent, DatePickerModule, FluidModule],
   templateUrl: './warranties.component.html',
   styleUrl: './warranties.component.scss'
 })

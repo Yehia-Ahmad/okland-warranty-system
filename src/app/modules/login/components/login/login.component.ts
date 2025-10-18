@@ -5,7 +5,7 @@ import { InvoiceCard } from "../../../assets/invoice-card/invoice-card";
 import { Auth } from '../../services/auth';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms'; 
-import { DiskService } from '../../../../shared/services/disk.service';
+import { DiskService } from '../../../shared/services/disk.service';
 import { Router } from '@angular/router';
 
 @Component({

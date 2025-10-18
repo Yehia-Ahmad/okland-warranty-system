@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, computed, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { Header } from "../header/header";
+import { HeaderComponent } from "../header/header.component";
 import { CustomSidenav } from "../../custom-sidenav/custom-sidenav";
 
 @Component({
   selector: 'app-side-nav',
   standalone: true,
-  imports: [CommonModule, MatSidenavModule, Header, CustomSidenav],
-  templateUrl: './side-nav.html',
-  styleUrl: './side-nav.scss'
+  imports: [CommonModule, MatSidenavModule, HeaderComponent, CustomSidenav],
+  templateUrl: './side-nav.component.html',
+  styleUrl: './side-nav.component.scss'
 })
-export class SideNav implements AfterViewInit {
+export class SideNavComponent implements AfterViewInit {
   @ViewChild('headerRef', { read: ElementRef }) headerRef!: ElementRef;
   @ViewChild('customSidenav') customSidenav!: CustomSidenav;
   isSidenavCollapsed = true;

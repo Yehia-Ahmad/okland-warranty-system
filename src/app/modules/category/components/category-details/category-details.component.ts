@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { CateoryService } from '../../services/cateory.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SideNav } from "../../../layout/components/side-nav/side-nav";
+import { SideNavComponent } from "../../../layout/components/side-nav/side-nav.component";
 import { DialogModule } from "primeng/dialog";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -20,7 +20,7 @@ import { QRCodeComponent } from 'angularx-qrcode';
     DialogModule,
     ButtonModule,
     QRCodeComponent,
-    SideNav,
+    SideNavComponent,
     Select
   ],
   templateUrl: './category-details.component.html',
