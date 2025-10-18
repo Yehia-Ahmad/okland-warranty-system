@@ -15,10 +15,11 @@ import { format } from 'date-fns';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ThemeService } from '../../../shared/services/theme.service';
+import { ErrorIconComponent } from "../../../assets/error/error-icon.component";
 
 @Component({
   selector: 'app-warranties',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginatorModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNavComponent, WarnComponent, DatePickerModule, FluidModule, TranslatePipe],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginatorModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNavComponent, WarnComponent, DatePickerModule, FluidModule, TranslatePipe, ErrorIconComponent],
   templateUrl: './warranties.component.html',
   styleUrl: './warranties.component.scss'
 })
@@ -46,6 +47,8 @@ export class WarrantiesComponent {
   first1: number = 0;
   rows1: number = 0;
   isDarkMode$;
+  errorVisible = false;
+  errorMessage = '';
 
 
   constructor(private _themeService: ThemeService, private fb: FormBuilder, private cdr: ChangeDetectorRef, private _warrantyService: WarrantyService) {
@@ -77,6 +80,10 @@ export class WarrantiesComponent {
     this._warrantyService.getAllWarranties(params).subscribe({
       next: (res: any) => {
         this.warranties = res.data;
+      }, error: (err: any) => {
+        this.errorVisible = true;
+        this.errorMessage = err.error.message;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -111,6 +118,10 @@ export class WarrantiesComponent {
       next: (res: any) => {
         this.getAllWarranties();
         this.deleteVisible = false;
+      }, error: (err: any) => {
+        this.errorVisible = true;
+        this.errorMessage = err.error.message;
+        this.cdr.detectChanges();
       }
     });
   }

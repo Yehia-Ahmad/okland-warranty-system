@@ -9,10 +9,11 @@ import { ButtonModule } from 'primeng/button';
 import { WarnComponent } from "../../../assets/warn/warn.component";
 import { TranslatePipe } from '@ngx-translate/core';
 import { ThemeService } from '../../../shared/services/theme.service';
+import { ErrorIconComponent } from "../../../assets/error/error-icon.component";
 
 @Component({
   selector: 'app-product-edit',
-  imports: [CommonModule, FormsModule, DialogModule, ButtonModule, SideNavComponent, WarnComponent, TranslatePipe],
+  imports: [CommonModule, FormsModule, DialogModule, ButtonModule, SideNavComponent, WarnComponent, TranslatePipe, ErrorIconComponent],
   templateUrl: './product-edit.component.html',
   styleUrl: './product-edit.component.scss'
 })
@@ -26,6 +27,8 @@ export class ProductEditComponent {
   deleteVisible: boolean = false;
   isDarkMode$;
   imagePreview: string | ArrayBuffer | null = null;
+  errorVisible = false;
+  errorMessage = '';
 
   constructor(private _themeService: ThemeService, private cdr: ChangeDetectorRef, private _router: Router, private _cateoryService: CateoryService, private _activatedRoute: ActivatedRoute, private location: Location) {
     this.isDarkMode$ = this._themeService.isDarkMode$;
@@ -45,6 +48,11 @@ export class ProductEditComponent {
         this.loading = false;
         this.product = res.data;
         this.cdr.detectChanges();
+      }, error: (err: any) => {
+        this.loading = false;
+        this.errorVisible = true;
+        this.errorMessage = err.error.message;
+        this.cdr.detectChanges();
       }
     })
   }
@@ -56,6 +64,11 @@ export class ProductEditComponent {
         this.loading = false;
         this.cdr.detectChanges();
         this.location.back();
+      }, error: (err: any) => {
+        this.loading = false;
+        this.errorVisible = true;
+        this.errorMessage = err.error.message;
+        this.cdr.detectChanges();
       }
     }) 
   }
@@ -65,7 +78,10 @@ export class ProductEditComponent {
       next: (res: any) => {
         this.cdr.detectChanges();
         this.location.back();
-
+      }, error: (err: any) => {
+        this.errorVisible = true;
+        this.errorMessage = err.error.message;
+        this.cdr.detectChanges();
       }
     })
   }

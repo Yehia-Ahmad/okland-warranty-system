@@ -9,11 +9,12 @@ import { TableModule } from 'primeng/table';
 import { AdminsService } from '../../services/admins.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ThemeService } from '../../../shared/services/theme.service';
+import { ErrorIconComponent } from "../../../assets/error/error-icon.component";
 
 @Component({
   selector: 'app-admins',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNavComponent, TranslatePipe],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TableModule, SelectModule, ButtonModule, DialogModule, SideNavComponent, TranslatePipe, ErrorIconComponent],
   templateUrl: './admins.component.html',
   styleUrl: './admins.component.scss'
 })
@@ -37,6 +38,8 @@ export class AdminsComponent {
   pages = [1, 2, 3, 4, '...', 10];
   currentPage = 1;
   isDarkMode$;
+  errorVisible = false;
+  errorMessage = '';
 
   constructor(private _themeService: ThemeService, private fb: FormBuilder, private _adminsService: AdminsService, private cdr: ChangeDetectorRef) {
     this.isDarkMode$ = this._themeService.isDarkMode$;
@@ -53,6 +56,10 @@ export class AdminsComponent {
     this._adminsService.getAllUsers(params).subscribe({
       next: (res: any) => {
         this.admins = res.data.users;
+        this.cdr.detectChanges();
+      }, error: (err: any) => {
+        this.errorVisible = true;
+        this.errorMessage = err.error.message;
         this.cdr.detectChanges();
       }
     });
@@ -82,6 +89,10 @@ export class AdminsComponent {
       next: (res: any) => {
         this.getAllUsers();
         this.visible = false;
+      }, error: (err: any) => {
+        this.errorVisible = true;
+        this.errorMessage = err.error.message;
+        this.cdr.detectChanges();
       }
     })
   }
@@ -93,6 +104,10 @@ export class AdminsComponent {
         this.getAllUsers();
         this.visible = false;
         this.selectedUser = null;
+      }, error: (err: any) => {
+        this.errorVisible = true;
+        this.errorMessage = err.error.message;
+        this.cdr.detectChanges();
       }
     })
   }
@@ -103,6 +118,10 @@ export class AdminsComponent {
         this.getAllUsers();
         this.deleteVisible = false;
         this.selectedUser = null;
+      }, error: (err: any) => {
+        this.errorVisible = true;
+        this.errorMessage = err.error.message;
+        this.cdr.detectChanges();
       }
     })
   }
