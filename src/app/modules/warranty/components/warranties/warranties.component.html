@@ -22,7 +22,7 @@
         </div>
         <div class="w-full p-4 pb-0 rounded-xl" [ngClass]="{
             'bg-gray_dark': isDarkMode$ | async,
-            'bg-[#f3eded]': !(isDarkMode$ | async)
+            'bg-light_card_bg': !(isDarkMode$ | async)
         }">
             <table class="w-full border-collapse text-sm text-gray-300">
                 <thead>

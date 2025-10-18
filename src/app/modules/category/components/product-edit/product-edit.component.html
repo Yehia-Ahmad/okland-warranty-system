@@ -6,7 +6,7 @@
         <div class="w-full flex flex-col items-center gap-4 px-10 my-6">
             <div class="w-full flex flex-col items-start justify-start py-4 px-8 rounded-lg" [ngClass]="{
                 'bg-gray_dark': isDarkMode$ | async,
-                'bg-[#f3eded]': !(isDarkMode$ | async)
+                'bg-light_card_bg': !(isDarkMode$ | async)
             }">
                 <h4 class="text-lg font-semibold font-roboto" [ngClass]="{
                     'text-light_orange': isDarkMode$ | async,
@@ -16,7 +16,7 @@
             </div>
             <div class="w-full flex flex-col items-start px-20 py-8 rounded-lg" [ngClass]="{
                 'bg-gray_dark': isDarkMode$ | async,
-                'bg-[#f3eded]': !(isDarkMode$ | async)
+                'bg-light_card_bg': !(isDarkMode$ | async)
             }">
                 <div class="w-full flex items-start py-4 gap-4">
                     <div class="flex flex-col items-end gap-8 mt-2">
@@ -76,7 +76,7 @@
         </div>
         <div class="w-full flex flex-col items-center justify-center gap-4 px-10 my-6 rounded-lg" [ngClass]="{
                 'bg-gray_dark': isDarkMode$ | async,
-                'bg-[#f3eded]': !(isDarkMode$ | async)
+                'bg-light_card_bg': !(isDarkMode$ | async)
             }">
             <img [src]="product?.image" alt="product" class="rounded-lg" width="200" height="500">
             <input type="file" (change)="onBasicUploadAuto($event)" accept="image/*" class="hidden" #fileInput>

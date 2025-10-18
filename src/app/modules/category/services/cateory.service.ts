@@ -22,7 +22,7 @@ export class CateoryService {
     return this._http.post(`${this._baseUrl}categories`, category);
   }
 
-  getProducts(params?: any) {
+  getProducts(category_id: number, params?: any) {
     return this._http.get(`${this._baseUrl}products`, { params });
   }
 

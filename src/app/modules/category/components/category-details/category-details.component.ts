@@ -11,6 +11,7 @@ import { environment } from '../../../../../environments/environment';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ThemeService } from '../../../shared/services/theme.service';
+import { ErrorIconComponent } from "../../../assets/error/error-icon.component";
 
 @Component({
   selector: 'app-category-details',
@@ -24,8 +25,9 @@ import { ThemeService } from '../../../shared/services/theme.service';
     QRCodeComponent,
     SideNavComponent,
     SelectModule,
-    TranslatePipe
-  ],
+    TranslatePipe,
+    ErrorIconComponent
+],
   templateUrl: './category-details.component.html',
   styleUrl: './category-details.component.scss'
 })
@@ -53,6 +55,8 @@ export class CategoryDetailsComponent {
   isCreatingQrCodes: boolean = false;
   isPrinting: boolean = false;
   isDarkMode$;
+  errorVisible = false;
+  errorMessage = '';
 
   constructor(
     private _themeService: ThemeService,
@@ -97,8 +101,8 @@ export class CategoryDetailsComponent {
   }
 
   getProducts() {
-    let params = { category_id: this.categoryId };
-    this._cateoryService.getProducts(params).subscribe({
+    let params = { category: this.categoryId };
+    this._cateoryService.getProducts(this.categoryId, params).subscribe({
       next: (res: any) => {
         this.products = res.data;
         this.cdr.detectChanges();
@@ -144,12 +148,17 @@ export class CategoryDetailsComponent {
     formData.append('image', this.addProductForm.value.image);
 
     this._cateoryService.addNewProduct(formData).subscribe({
-      next: () => {
+      next: (res: any) => {
         this.hideDialog();
         this.getProducts();
         this.isAddingProduct = false;
       },
-      error: () => (this.isAddingProduct = false)
+      error: (err: any) => {
+        this.isAddingProduct = false;
+        this.errorVisible = true;
+        this.errorMessage = err.error.message;
+        this.cdr.detectChanges();
+      }
     });
   }
 
